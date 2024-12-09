@@ -62,6 +62,23 @@ class MyDrawer extends StatelessWidget {
                 },
               ),
 
+              //About us
+              MyListTile(
+                iconData: Icons.info,
+                tiletitle: 'About us',
+                onTap: () {
+                  //pop the window
+                  Navigator.pop(context);
+                  //Go to the contact page
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const AboutUs(),
+                    ),
+                  );
+                },
+              ),
+
               //Contact us
               MyListTile(
                 iconData: Icons.phone,
@@ -91,23 +108,6 @@ class MyDrawer extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) => const PrivacyPolicy(),
-                    ),
-                  );
-                },
-              ),
-
-              //About us
-              MyListTile(
-                iconData: Icons.info,
-                tiletitle: 'About us',
-                onTap: () {
-                  //pop the window
-                  Navigator.pop(context);
-                  //Go to the contact page
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const AboutUs(),
                     ),
                   );
                 },

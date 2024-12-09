@@ -50,7 +50,7 @@ class _HomePageState extends State<HomePage> {
         .map((e) => " [${e.book} ${e.chapter}:${e.verse}] ${e.text.trim()}")
         .join();
 
-    return "$result [KJV]";
+    return "$result [BOL-KJV]";
   }
 
   @override

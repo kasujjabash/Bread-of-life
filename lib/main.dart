@@ -29,46 +29,48 @@ class _MainAppState extends State<MainApp> {
 
   @override
   void initState() {
+    super.initState();
+
+    // Simulate some loading tasks (e.g. fetching data)
     Future.delayed(
       const Duration(seconds: 3),
       () async {
         MainProvider mainProvider =
             Provider.of<MainProvider>(context, listen: false);
-        mainProvider.itemPositionsListener.itemPositions.addListener(
-          () {
-            int index = mainProvider
-                .itemPositionsListener.itemPositions.value.last.index;
 
-            SaveCurrentIndex.execute(
-                index: mainProvider
-                    .itemPositionsListener.itemPositions.value.first.index);
+        mainProvider.itemPositionsListener.itemPositions.addListener(() {
+          int index =
+              mainProvider.itemPositionsListener.itemPositions.value.last.index;
 
-            Verse currentVerse = mainProvider.verses[index];
+          SaveCurrentIndex.execute(
+              index: mainProvider
+                  .itemPositionsListener.itemPositions.value.first.index);
 
-            if (mainProvider.currentVerse == null) {
-              mainProvider.updateCurrentVerse(verse: mainProvider.verses.first);
-            }
+          Verse currentVerse = mainProvider.verses[index];
 
-            Verse previousVerse = mainProvider.currentVerse == null
-                ? mainProvider.verses.first
-                : mainProvider.currentVerse!;
+          if (mainProvider.currentVerse == null) {
+            mainProvider.updateCurrentVerse(verse: mainProvider.verses.first);
+          }
 
-            if (currentVerse.book != previousVerse.book) {
-              mainProvider.updateCurrentVerse(verse: currentVerse);
-            }
-          },
-        );
+          Verse previousVerse = mainProvider.currentVerse == null
+              ? mainProvider.verses.first
+              : mainProvider.currentVerse!;
+
+          if (currentVerse.book != previousVerse.book) {
+            mainProvider.updateCurrentVerse(verse: currentVerse);
+          }
+        });
+
         await FetchVerses.execute(mainProvider: mainProvider).then(
           (_) async {
             await FetchBooks.execute(mainProvider: mainProvider)
                 .then((_) => setState(() {
                       _loading = false;
-                    }));
+                    },),);
           },
         );
       },
     );
-    super.initState();
   }
 
   @override
@@ -85,12 +87,14 @@ class _MainAppState extends State<MainApp> {
         brightness: Brightness.dark,
       ),
       home: _loading
-          ? const Center(
+          ? Center(
               child: CircularProgressIndicator(
-                strokeCap: StrokeCap.round,
+                valueColor: AlwaysStoppedAnimation<Color>(
+                  Theme.of(context).colorScheme.secondary,
+                ),
               ),
             )
-          : const HomePage(),
+          : const HomePage(), // Show splash screen while loading
     );
   }
 }

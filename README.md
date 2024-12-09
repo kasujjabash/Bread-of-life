@@ -1,9 +1,9 @@
-# kjv
+# Bread of Life - kjv bible App
 
 This is repository contains the source code a bible app that uses King James
 Version Bible built using Flutter.
 
-<!-- [Link to YouTube Playlist](https://www.youtube.com/playlist?list=PLh4DuGxrPvWhVaXxPqrwvUOz7BynkWu8P) -->
+
 
 ## Drawer
 

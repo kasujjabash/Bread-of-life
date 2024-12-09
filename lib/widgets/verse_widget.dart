@@ -30,7 +30,7 @@ class VerseWidget extends StatelessWidget {
                       ? "${verse.chapter}"
                       : "${verse.verse.toString()} ",
                   style: TextStyle(
-                    fontSize: verse.verse == 1 ? 45 : 15,
+                    fontSize: verse.verse == 1 ? 45 : 18,
                     fontWeight:
                         verse.verse == 1 ? FontWeight.bold : FontWeight.w500,
                     color: Theme.of(context).colorScheme.primary,
