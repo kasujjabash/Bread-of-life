@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "106978850749",
+    "project_id": "bread-of-life-d0170",
+    "storage_bucket": "bread-of-life-d0170.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:106978850749:android:282b844c1a7764243404d4",
+        "android_client_info": {
+          "package_name": "com.example.kjv"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATQhm-bjA1kvfqiFw1g-gCL-_5GlGi0WM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

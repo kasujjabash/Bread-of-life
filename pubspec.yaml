@@ -13,6 +13,7 @@ dependencies:
     sdk: flutter
   fluttertoast: ^8.2.4
   get: ^4.6.6
+  lottie: ^3.2.0
   provider: ^6.1.1
   scroll_to_index: ^3.0.1
   scrollable_positioned_list: ^0.3.8
@@ -22,6 +23,16 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
+  flutter_launcher_icons: ^0.14.2
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  remove_alpha_ios: true
+  image_path: "assets/images/bol-logo.png"
+  min_sdk_version: 21
+  adaptive_icon_background: '#ffffff'
+  adaptive_icon_foreground: "assets/images/bol-logo.png"
 
 flutter:
   uses-material-design: true
