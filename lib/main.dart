@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kjv/pages/home_page.dart';
+import 'package:kjv/providers/quiz_provider.dart';
 import 'package:kjv/services/fetch_books.dart';
 import 'package:kjv/services/fetch_verses.dart';
 import 'package:kjv/services/save_current_index.dart';
@@ -11,7 +12,10 @@ import 'package:get/get.dart';
 void main() {
   runApp(
     MultiProvider(
-      providers: [ChangeNotifierProvider(create: (context) => MainProvider())],
+      providers: [
+        ChangeNotifierProvider(create: (context) => MainProvider()),
+        ChangeNotifierProvider(create: (context) => QuizProvider()),
+      ],
       child: const MainApp(),
     ),
   );
@@ -63,10 +67,13 @@ class _MainAppState extends State<MainApp> {
 
         await FetchVerses.execute(mainProvider: mainProvider).then(
           (_) async {
-            await FetchBooks.execute(mainProvider: mainProvider)
-                .then((_) => setState(() {
-                      _loading = false;
-                    },),);
+            await FetchBooks.execute(mainProvider: mainProvider).then(
+              (_) => setState(
+                () {
+                  _loading = false;
+                },
+              ),
+            );
           },
         );
       },

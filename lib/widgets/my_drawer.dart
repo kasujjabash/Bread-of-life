@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:kjv/pages/privacy_policy.dart';
 import 'package:kjv/widgets/my_list_tile.dart';
+import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../pages/about_us_page.dart';
 import '../pages/contacts_page.dart';
+import '../pages/quiz_page.dart';
+import '../providers/main_provider.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final mainProvider = Provider.of<MainProvider>(context,
+        listen: false); //instance of MainProvider
+
     return Drawer(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -30,35 +37,40 @@ class MyDrawer extends StatelessWidget {
                 onTap: () {
                   // Pop the current window
                   Navigator.pop(context);
-
-                  // Show a "Coming Soon" message in a dialog
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: const Text(
-                          "Coming Soon",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, color: Colors.blue),
-                        ),
-                        content: const Text(
-                          "The Bible Quiz feature is coming soon. Stay tuned!",
-                          style: TextStyle(fontSize: 20),
-                        ),
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop(); // Close the dialog
-                            },
-                            child: const Text(
-                              "OK",
-                              style: TextStyle(fontSize: 20),
-                            ),
-                          ),
-                        ],
-                      );
-                    },
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => QuizPage(),
+                    ),
                   );
+                  // Show a "Coming Soon" message in a dialog
+                  // showDialog(
+                  //   context: context,
+                  //   builder: (BuildContext context) {
+                  //     return AlertDialog(
+                  //       title: const Text(
+                  //         "Coming Soon",
+                  //         style: TextStyle(
+                  //             fontWeight: FontWeight.bold, color: Colors.blue),
+                  //       ),
+                  //       content: const Text(
+                  //         "The Bible Quiz feature is coming soon. Stay tuned!",
+                  //         style: TextStyle(fontSize: 20),
+                  //       ),
+                  //       actions: [
+                  //         TextButton(
+                  //           onPressed: () {
+                  //             Navigator.of(context).pop(); // Close the dialog
+                  //           },
+                  //           child: const Text(
+                  //             "OK",
+                  //             style: TextStyle(fontSize: 20),
+                  //           ),
+                  //         ),
+                  //       ],
+                  //     );
+                  //   },
+                  // );
                 },
               ),
 
@@ -118,12 +130,17 @@ class MyDrawer extends StatelessWidget {
           //developer
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-            child: Text(
-              'Developed by Bashir Kasujja',
-              style: TextStyle(
-                  fontSize: 15,
-                  color: Colors.blue.shade900,
-                  fontWeight: FontWeight.bold),
+            child: GestureDetector(
+              onTap: () {
+                mainProvider.launchInBrowser(context);
+              },
+              child: Text(
+                'Developed by Bashir Kasujja',
+                style: TextStyle(
+                    fontSize: 15,
+                    color: Colors.blue.shade900,
+                    fontWeight: FontWeight.bold),
+              ),
             ),
           )
         ],

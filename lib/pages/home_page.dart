@@ -130,7 +130,7 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
             //Drawer
-            drawer: const MyDrawer(),
+            drawer:  MyDrawer(),
             // Body of the Scaffold with a ScrollablePositionedList
             body: ScrollablePositionedList.builder(
               itemCount: verses.length,
