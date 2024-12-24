@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:kjv/pages/privacy_policy.dart';
 import 'package:kjv/widgets/my_list_tile.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../pages/about_us_page.dart';
 import '../pages/contacts_page.dart';
@@ -40,7 +39,7 @@ class MyDrawer extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => QuizPage(),
+                      builder: (context) => const QuizPage(),
                     ),
                   );
                   // Show a "Coming Soon" message in a dialog

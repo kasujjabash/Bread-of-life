@@ -46,6 +46,7 @@ android {
     defaultConfig {
         applicationId "com.example.kjv"
         minSdkVersion 21
+        multiDexEnabled true
         targetSdkVersion 33 // Hardcoded for compatibility
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName

@@ -92,6 +92,8 @@ class ContactsPage extends StatelessWidget {
                         contacttitle: "Developer's website",
                         contactdetails: 'bashirkasujja.com',
                       ),
+
+                      
                     ],
                   ),
                 ],

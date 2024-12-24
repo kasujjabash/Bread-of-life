@@ -10,6 +10,8 @@ import 'providers/main_provider.dart';
 import 'package:get/get.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  // MobileAds.instance.initialize();
   runApp(
     MultiProvider(
       providers: [

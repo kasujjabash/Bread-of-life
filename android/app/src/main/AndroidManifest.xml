@@ -24,6 +24,7 @@
     </queries>
 
     <application
+    
         android:label="Bread of Life"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
@@ -53,5 +54,9 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+
+        <!-- <meta-data
+            android:name="com.google.android.gms.ads.pub-7182836201397606"
+            android:value="ca-app-pub-7182836201397606~2846107498"/> -->
     </application>
 </manifest>
