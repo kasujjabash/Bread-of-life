@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:kjv/pages/devotions.dart';
 import 'package:kjv/pages/privacy_policy.dart';
 import 'package:kjv/widgets/my_list_tile.dart';
 import 'package:provider/provider.dart';
-
 import '../pages/about_us_page.dart';
 import '../pages/contacts_page.dart';
 import '../pages/quiz_page.dart';
@@ -29,6 +29,22 @@ class MyDrawer extends StatelessWidget {
                     size: 80, color: Colors.blue.shade900),
               ),
 
+              //devotions
+              MyListTile(
+                iconData: Icons.menu_book_sharp,
+                tiletitle: 'Devotions',
+                onTap: () {
+                  //pop the window
+                  Navigator.pop(context);
+                  //Go to the devotions page
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const Devotions(),
+                    ),
+                  );
+                },
+              ),
               //Contact us
               MyListTile(
                 iconData: Icons.quiz,
@@ -42,34 +58,6 @@ class MyDrawer extends StatelessWidget {
                       builder: (context) => const QuizPage(),
                     ),
                   );
-                  // Show a "Coming Soon" message in a dialog
-                  // showDialog(
-                  //   context: context,
-                  //   builder: (BuildContext context) {
-                  //     return AlertDialog(
-                  //       title: const Text(
-                  //         "Coming Soon",
-                  //         style: TextStyle(
-                  //             fontWeight: FontWeight.bold, color: Colors.blue),
-                  //       ),
-                  //       content: const Text(
-                  //         "The Bible Quiz feature is coming soon. Stay tuned!",
-                  //         style: TextStyle(fontSize: 20),
-                  //       ),
-                  //       actions: [
-                  //         TextButton(
-                  //           onPressed: () {
-                  //             Navigator.of(context).pop(); // Close the dialog
-                  //           },
-                  //           child: const Text(
-                  //             "OK",
-                  //             style: TextStyle(fontSize: 20),
-                  //           ),
-                  //         ),
-                  //       ],
-                  //     );
-                  //   },
-                  // );
                 },
               ),
 
@@ -107,6 +95,18 @@ class MyDrawer extends StatelessWidget {
                 },
               ),
 
+              //Feedback
+              MyListTile(
+                iconData: Icons.feedback,
+                tiletitle: 'Feedback',
+                onTap: () {
+                  //pop the window
+                  Navigator.pop(context);
+                  //Go to the contact page
+                  mainProvider.feedBackForm(context);
+                },
+              ),
+
               //Privacy policy
               MyListTile(
                 iconData: Icons.privacy_tip,
@@ -114,7 +114,7 @@ class MyDrawer extends StatelessWidget {
                 onTap: () {
                   //pop the window
                   Navigator.pop(context);
-                  //Go to the contact page
+                  //Go to the privacy policy page
                   Navigator.push(
                     context,
                     MaterialPageRoute(

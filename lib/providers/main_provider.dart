@@ -67,24 +67,7 @@ class MainProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-//    //Open a Web URL
-// Future<void> openWebUrl(BuildContext context) async {
-//   final Uri url = Uri.parse('https://bashirkasujja.com/');
-//   try {
-//     if (await canLaunchUrl(url)) {
-//       await launchUrl(url, mode: LaunchMode.externalApplication);
-//     } else {
-//       // Show error using Snackbar
-//       ScaffoldMessenger.of(context).showSnackBar(
-//         SnackBar(content: Text('Could not launch $url')),
-//       );
-//     }
-//   } catch (e) {
-//     ScaffoldMessenger.of(context).showSnackBar(
-//       SnackBar(content: Text('Error: $e')),
-//     );
-//   }
-// }
+
   Future<void> launchInBrowser(BuildContext context) async {
     final Uri toLaunch = Uri.parse('https://bashirkasujja.com/');
 
@@ -105,6 +88,25 @@ class MainProvider extends ChangeNotifier {
     }
   }
 
+  Future<void> feedBackForm(BuildContext context) async {
+    final Uri toLaunch = Uri.parse('https://docs.google.com/forms/d/e/1FAIpQLSdd6893Qllnh6pkgVWWZtJ_UNvQYqYwXdeGvK-3prwRfnV5bQ/viewform');
+
+    try {
+      if (!await launchUrl(
+        toLaunch,
+        mode: LaunchMode.externalApplication,
+      )) {
+        throw Exception('Could not launch $toLaunch');
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Error: $e'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
   void dialPhoneNumber(BuildContext context) async {
     final Uri phoneUri = Uri(scheme: 'tel', path: '+256707268485');
 
@@ -151,4 +153,9 @@ class MainProvider extends ChangeNotifier {
       );
     }
   }
+
+
+    // Method to launch the URL (e.g., Google Form)
+
 }
+ 
