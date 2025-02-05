@@ -1,5 +1,7 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:kjv/pages/home_page.dart';
+import 'package:kjv/providers/devotion_provider.dart';
 import 'package:kjv/providers/quiz_provider.dart';
 import 'package:kjv/services/fetch_books.dart';
 import 'package:kjv/services/fetch_verses.dart';
@@ -9,14 +11,16 @@ import 'models/verse.dart';
 import 'providers/main_provider.dart';
 import 'package:get/get.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   // MobileAds.instance.initialize();
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => MainProvider()),
         ChangeNotifierProvider(create: (context) => QuizProvider()),
+        ChangeNotifierProvider(create: (context) => DevotionProvider()),
       ],
       child: const MainApp(),
     ),

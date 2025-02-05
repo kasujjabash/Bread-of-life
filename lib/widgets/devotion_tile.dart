@@ -1,84 +1,79 @@
 import 'package:flutter/material.dart';
+import 'package:kjv/models/devotion.dart';
 import 'package:kjv/pages/devotions_detail.dart';
+import 'package:kjv/providers/devotion_provider.dart';
+import 'package:provider/provider.dart';
 
 class DevotionTile extends StatelessWidget {
-  const DevotionTile({super.key});
+  final Devotion devotion;
+  final int index;
+
+  const DevotionTile({super.key, required this.devotion, required this.index});
 
   @override
   Widget build(BuildContext context) {
+    final devotionProvider = Provider.of<DevotionProvider>(context);
+
     return GestureDetector(
       onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const DevotionDetails()));
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DevotionDetails(devotionId: devotionProvider.devotions[index].id),
+          ),
+        );
       },
       child: Column(
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Expanded(
-                // Ensures the column text does not overflow
+              Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Title
                     Text(
-                      'Steadfast',
-                      style: TextStyle(
+                      devotion.title,
+                      style: const TextStyle(
                         fontSize: 24,
-                        fontWeight: FontWeight.bold, // Improves text emphasis
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    // Sized box for spacing
-                    const SizedBox(height: 15),
+                    const SizedBox(height: 10),
                     // Scripture
-                    const Padding(
-                      padding: EdgeInsets.only(
-                          right: 8.0), // Avoids overlap with image
+                    Padding(
+                      padding: const EdgeInsets.only(right: 8.0),
                       child: Text(
-                        '1 Thessalonians 1:1: Paul, Silvanus, and Timotheus, '
-                        'unto the church of the Thessalonians which is in God the Father '
-                        'and in the Lord Jesus Christ: Grace be unto you, and peace, '
-                        'from God our Father, and the Lord Jesus Christ.',
-                        style: TextStyle(
-                            fontSize: 16), // Added a default font size
-                        maxLines: 3, // Limits the text display
-                        overflow:
-                            TextOverflow.ellipsis, // Adds ellipsis if overflow
+                        devotion.scripture,
+                        style: const TextStyle(fontSize: 16),
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    //  date/timestamp
+                    const SizedBox(height: 10),
+                    // Date
                     Text(
-                      'Thursday 17, 2024',
-                      style: TextStyle(color: Colors.grey),
-                    )
+                      devotion.date,
+                      style: const TextStyle(color: Colors.grey),
+                    ),
                   ],
                 ),
               ),
-              const SizedBox(
-                width: 10,
-              ),
+              const SizedBox(width: 10),
               // Thumbnail
               ClipRRect(
-                // Ensures rounded corners if needed
-                borderRadius: BorderRadius.circular(8.0), // Adds some rounding
+                borderRadius: BorderRadius.circular(8.0),
                 child: Image.asset(
                   'assets/images/quizz-banner.jpg',
-                  fit: BoxFit.cover,
+                  width: 100,
                   height: 100,
-                  width: 100, // Ensures a square thumbnail
+                  fit: BoxFit.cover,
                 ),
-              ),
+              )
             ],
           ),
-          //sized box
-          const SizedBox(
-            height: 10,
-          ),
-          //divider
+          const SizedBox(height: 10),
           const Divider(thickness: 1.0),
         ],
       ),

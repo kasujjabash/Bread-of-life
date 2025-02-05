@@ -1,79 +1,80 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class DevotionDetails extends StatelessWidget {
-  const DevotionDetails({super.key});
+  final String devotionId;
+
+  const DevotionDetails({super.key, required this.devotionId});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.blue.shade900,
-          foregroundColor: Colors.white,
-          title: const Text('Devotion'),
-          centerTitle: true,
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              //Banner image
-              Image.asset(
-                'assets/images/quizz-banner.jpg',
-                fit: BoxFit.cover,
-              ),
+      appBar: AppBar(
+        backgroundColor: Colors.blue.shade900,
+        foregroundColor: Colors.white,
+        title: const Text('Devotion'),
+        centerTitle: true,
+      ),
+      body: FutureBuilder<DocumentSnapshot>(
+        future: FirebaseFirestore.instance.collection('devotions').doc(devotionId).get(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (!snapshot.hasData || !snapshot.data!.exists) {
+            return const Center(child: Text('Devotion not found'));
+          }
 
-              const Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    //Title
-                    const Text(
-                      'Steadfast',
-                      style: TextStyle(fontSize: 25),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    //Author
-                    Text(
-                      'By Bashir Kasujja',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    //Dates
-                    Text(
-                      'Thursday 16 Jan, 2025',
-                      style: TextStyle(fontSize: 14, color: Colors.grey),
-                    ),
-
-                    SizedBox(
-                      height: 10,
-                    ),
-                    // Scripture
-                    Text(
-                      '''Bread of Life was created by Bashir Kasujja, a believer in God and a passionate, growing software developer.
-          ''',
-                      style: TextStyle(
-                        fontSize: 19,
-                      ),
-                    ),
-                    // Explanation
-                    Text(
-                      '''Bread of Life was created by Bashir Kasujja, a believer in God and a passionate, growing software developer. Bashir is dedicated to using his talents to glorify God and share His Word with others through technology. Bashir is dedicated to using his talents to glorify God and share His Word with others through technology.Bread of Life was created by Bashir Kasujja, a believer in God and a passionate, growing software developer.''',
-                      style: TextStyle(
-                        fontSize: 19,
-                      ),
-                    ),
-                    //Prayer
-                  ],
+          var devotion = snapshot.data!;
+          return SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Banner image
+                SizedBox(
+                  height: 200,
+                  width: double.infinity,
+                  child: Image.asset(
+                    'assets/images/quizz-banner.jpg',
+                    fit: BoxFit.cover,
+                  ),
                 ),
-              )
-            ],
-          ),
-        ));
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Title
+                      Text(
+                        devotion['title'] ?? 'No Title',
+                        style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 10),
+                      // Scripture
+                      Text(
+                        devotion['scripture'] ?? 'No Scripture Provided',
+                        style: const TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 10),
+                      // Explanation
+                      Text(
+                        devotion['description'] ?? 'No Explanation Available',
+                        style: const TextStyle(fontSize: 19),
+                      ),
+                      const SizedBox(height: 15),
+                      // Prayer
+                      Text(
+                        devotion['prayer'] ?? 'No Prayer Added',
+                        style: const TextStyle(fontSize: 18, fontStyle: FontStyle.italic),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+    );
   }
 }
