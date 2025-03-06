@@ -1,25 +1,37 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:kjv/models/devotion.dart';
-import 'package:kjv/services/firebase_services.dart';
 
 class DevotionProvider with ChangeNotifier {
-  List<Devotion> _devotions = [];
-  bool _isLoading = false;
+  final CollectionReference _devotionsCollection =
+      FirebaseFirestore.instance.collection('devotions');
 
-  List<Devotion> get devotions => _devotions;
-  bool get isLoading => _isLoading;
+  // Expose the stream to UI
+  Stream<QuerySnapshot> get devotionsStream =>
+      _devotionsCollection.orderBy('timestamp', descending: true).snapshots();
 
-  Future<void> fetchDevotions() async {
-    _isLoading = true;
-    notifyListeners();
+  List<Map<String, dynamic>> _devotions = [];
 
-    try {
-      _devotions = await FirebaseService().getDevotions();
-    } catch (error) {
-      throw error;
-    } finally {
-      _isLoading = false;
-      notifyListeners();
-    }
+  List<Map<String, dynamic>> get devotions => _devotions;
+
+  DevotionProvider() {
+    fetchDevotions();
+  }
+
+  void fetchDevotions() {
+    _devotionsCollection
+        .orderBy('timestamp', descending: true)
+        .snapshots()
+        .listen((snapshot) {
+      _devotions = snapshot.docs.map((doc) {
+        return {
+          'title': doc['title'] ?? '',
+          'description': doc['description'] ?? '',
+          'prayer': doc['prayer'] ?? '',
+          'scripture': doc['scripture'] ?? '',
+          'timestamp': doc['timestamp'],
+        };
+      }).toList();
+      notifyListeners(); // Notify listeners of updates
+    });
   }
 }

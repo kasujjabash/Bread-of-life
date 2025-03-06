@@ -1,49 +1,42 @@
 import 'package:flutter/material.dart';
-import 'package:kjv/providers/devotion_provider.dart';
-import 'package:provider/provider.dart';
+import 'package:lottie/lottie.dart';
 
-import '../widgets/devotion_tile.dart';
-
-class Devotions extends StatelessWidget {
-  const Devotions({super.key});
+class DevotionScreen extends StatelessWidget {
+  const DevotionScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final devotionProvider = Provider.of<DevotionProvider>(context);
-
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.blue.shade900,
-          foregroundColor: Colors.white,
-          title: const Text('Devotion'),
-          centerTitle: true,
+      appBar: AppBar(
+        title: const Text('Devotions'),
+      ),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SizedBox(height: 20),
+              Lottie.asset('assets/animation/comming-soon.json'),
+              const SizedBox(height: 20),
+              GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) => const ContactsPage(),
+                    //   ),
+                    // );
+                  },
+                  child: Text(
+                    'Back To Bible',
+                    style: TextStyle(fontSize: 20, color: Colors.blue.shade900),
+                  ))
+            ],
+          ),
         ),
-        body: Column(
-          children: [
-            Expanded(
-                child: ListView.builder(
-              itemCount: devotionProvider.devotions.length,
-              itemBuilder: (context, index) {
-                return DevotionTile(
-                  devotion: devotionProvider.devotions[index],
-                  index: index,
-                );
-              },
-            ))
-          ],
-        )
-
-        // const Padding(
-        //   padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-        //   child: const Column(
-        //     crossAxisAlignment: CrossAxisAlignment.start,
-        //     children: [
-        //       //devotion tile
-        //       DevotionTile(),
-        //       DevotionTile()
-        //     ],
-        //   ),
-        // ),
-        );
+      ),
+    );
   }
 }

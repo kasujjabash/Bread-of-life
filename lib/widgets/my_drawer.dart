@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kjv/pages/devotions.dart';
+
 import 'package:kjv/pages/privacy_policy.dart';
 import 'package:kjv/widgets/my_list_tile.dart';
 import 'package:provider/provider.dart';
@@ -40,7 +41,7 @@ class MyDrawer extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const Devotions(),
+                      builder: (context) =>  DevotionScreen(),
                     ),
                   );
                 },
